@@ -33,7 +33,7 @@ export default function Contact() {
     const myForm = event.target
     const formData = new FormData(myForm)
 
-    fetch('/', {
+    await fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(formData).toString(),
@@ -41,22 +41,22 @@ export default function Contact() {
       .then(() => console.log('Form successfully submitted'))
       .catch((error) => alert(error))
 
-    const response = await fetch('/api/contact-form', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSONData,
-    })
+    // const response = await fetch('/api/contact-form', {
+    //   method: 'POST',
+    //   headers: {
+    //     'content-type': 'application/json',
+    //   },
+    //   body: JSONData,
+    // })
 
-    if (!response.ok) {
-      const errorResponse = await response.json()
-      console.error(errorResponse.message)
-      setErrorMessage('There was an error while sending your message.')
-      setSubmitting(false)
-      setSubmitted(false)
-      return
-    }
+    // if (!response.ok) {
+    //   const errorResponse = await response.json()
+    //   console.error(errorResponse.message)
+    //   setErrorMessage('There was an error while sending your message.')
+    //   setSubmitting(false)
+    //   setSubmitted(false)
+    //   return
+    // }
 
     setSubmitted(true)
     setSubmitting(false)
@@ -86,13 +86,14 @@ export default function Contact() {
         </p>
       </div>
       <form
-        netlify
+        data-netlify={true}
         data-netlify-recaptcha={true}
         name="contact"
         id="ContactForm"
         onSubmit={handleSubmit}
         className="mx-auto mt-16 max-w-xl sm:mt-20"
       >
+        <input type="hidden" name="form-name" value="contact" />
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div>
             <label
