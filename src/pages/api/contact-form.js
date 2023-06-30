@@ -7,9 +7,11 @@ export default function handler(req, res) {
 
   const { firstName, lastName, business, phone, email, message } = req.body
 
-  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()
+  const apiInstanceEmail = new SibApiV3Sdk.TransactionalEmailsApi()
+  const apiInstanceContact = new SibApiV3Sdk.ContactsApi()
 
   let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail()
+  let createContact = new SibApiV3Sdk.CreateContact()
 
   sendSmtpEmail = {
     to: [
@@ -33,7 +35,23 @@ export default function handler(req, res) {
     },
   }
 
-  apiInstance.sendTransacEmail(sendSmtpEmail).then(
+  if (req.body.subscribe) {
+    createContact.email = email
+    createContact.listIds = [6]
+
+    apiInstanceContact.createContact(createContact).then(
+      function (data) {
+        console.log(
+          'API called successfully. Returned data: ' + JSON.stringify(data)
+        )
+      },
+      function (error) {
+        console.error(error)
+      }
+    )
+  }
+
+  apiInstanceEmail.sendTransacEmail(sendSmtpEmail).then(
     function (data) {
       console.log('API called successfully. Returned data: ' + data)
     },

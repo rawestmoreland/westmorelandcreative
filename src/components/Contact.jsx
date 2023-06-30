@@ -45,22 +45,22 @@ export default function Contact() {
       .then(() => console.log('Form successfully submitted'))
       .catch((error) => alert(error))
 
-    // const response = await fetch('/api/contact-form', {
-    //   method: 'POST',
-    //   headers: {
-    //     'content-type': 'application/json',
-    //   },
-    //   body: JSONData,
-    // })
+    const response = await fetch('/api/contact-form', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSONData,
+    })
 
-    // if (!response.ok) {
-    //   const errorResponse = await response.json()
-    //   console.error(errorResponse.message)
-    //   setErrorMessage('There was an error while sending your message.')
-    //   setSubmitting(false)
-    //   setSubmitted(false)
-    //   return
-    // }
+    if (!response.ok) {
+      const errorResponse = await response.json()
+      console.error(errorResponse.message)
+      setErrorMessage('There was an error while sending your message.')
+      setSubmitting(false)
+      setSubmitted(false)
+      return
+    }
 
     setSubmitted(true)
     setSubmitting(false)
