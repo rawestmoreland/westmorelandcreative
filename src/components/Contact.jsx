@@ -33,10 +33,14 @@ export default function Contact() {
     const myForm = event.target
     const formData = new FormData(myForm)
 
-    await fetch('/', {
+    const bodyData = new URLSearchParams(formData).toString()
+
+    console.log(bodyData)
+
+    fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString(),
+      body: bodyData,
     })
       .then(() => console.log('Form successfully submitted'))
       .catch((error) => alert(error))
@@ -87,7 +91,6 @@ export default function Contact() {
       </div>
       <form
         data-netlify={true}
-        data-netlify-recaptcha={true}
         name="contact"
         id="ContactForm"
         onSubmit={handleSubmit}
@@ -202,7 +205,6 @@ export default function Contact() {
               />
             </div>
           </div>
-          <div data-netlify-recaptcha="true" />
           <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">
             <div className="flex h-6 items-center">
               <Switch
